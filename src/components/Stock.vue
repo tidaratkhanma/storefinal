@@ -34,7 +34,7 @@
           <td>
             <div class="file">
                   <label class="file-label">
-                  <input class="file-input" type="file" name="resume"  @change="onFileChange($event.target.files[0])"required>  &nbsp; &nbsp; &nbsp; &nbsp;
+                  <input class="file-input" type="file" name="resume"  @change="onFileChange($event.target.files[0])"required>
                     <span class="file-cta">
                       <span class="file-icon">
                         <i class="fas fa-upload"></i>
@@ -45,15 +45,15 @@
                     </span>
                   </label>
                 </div>
-          </td>
+          </td> &nbsp; &nbsp; &nbsp; &nbsp;
           <td> <a class="button is-primary is-outlined" @click="insert()">+ADD</a> </td>
         </tr>
       </table>
     </div>
   <div class="column"></div>
 </div>
-
-<img width="25%" src="../assets/store.png"> </br>
+<center>
+<img width="25%" src="../assets/store.png"> </br> </center>
 <div class="columns">
   <div class="column"></div>
       <table class="table is-fullwidth" >

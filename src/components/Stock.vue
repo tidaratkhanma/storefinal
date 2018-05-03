@@ -2,26 +2,23 @@
   <div class="hello">
     <div class="tabs is-toggle  is-right">
   <ul>
-    <router-link to="/">
-    <li>
+    <li  @click="typeOrder()">
       <a>
         <span class="icon is-small"><i class="fas fa-film" aria-hidden="true"></i></span>
         <span>Order</span>
       </a>
     </li>
-    </router-link>
-    <router-link to="/Stock">
-    <li>
+    <li  @click="typestock()">
       <a>
         <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
         <span>Stock</span>
       </a>
     </li>
-    </router-link>
   </ul>
 </div>
 
 
+<div v-if = "type === 'stock'" >
 
 <div class="columns">
   <div class="column"></div>
@@ -102,12 +99,36 @@
            </tr>
             </tbody>
       </table>
-
     </div>
   <div class="column"></div>
-</div>
 
-  </div>
+
+</div>
+<!-- จบstock -->
+<div class="order"  v-if = "type === 'Order'" >
+      <table class="table is-striped is-narrow is-hoverable is-fullwidth" >
+
+        <tbody v-for =" (stock,key) in showstock"  >
+          <tr>
+            <td >  <img :src="stock.image"style="width: 150px; height: 200px;"></td>
+            <td>  </br></br></br><b>  {{stock.name}} </b>
+            </br>  จำนวน   {{stock.number}}
+            </br>ราคา   {{stock.price}}
+            </td>
+            <td></td><td></td>
+            <td> </br></br></br> </br>
+                  <a  class="button is-success"  @click="bye(key,stock.number)">
+                    <span class="icon is-small">
+                      <i class="fas fa-cart-plus"></i>
+                    </span>
+                    <span>BUY</span>
+                  </a>
+            </td>
+         </tr>
+            </tbody>
+      </table>
+</div>
+</div>
 </template>
 
 <script>
@@ -132,7 +153,8 @@ export default {
         image: ''
       },
       showstock: '',
-      sw: ''
+      sw: '',
+      type: 'Order'
     }
   },
   created: function () {
@@ -153,9 +175,9 @@ export default {
       this.data.number = ''
       this.data.price = ''
       this.data.image = ''
-
     },
     async Update (key, name, number, price) {
+      this.checkEdit = ''
       let urlsImg = await this.createImage()
       firebase.database().ref('/stock/').child(key).update({
         name: name,
@@ -163,7 +185,6 @@ export default {
         price: price,
         image: urlsImg.downloadURL
       })
-      this.pullData()
       this.checkEdit = ''
       this.sw = 'update'
       this.pullData()
@@ -185,6 +206,17 @@ export default {
       const storageRef = firebase.storage().ref('image/' + this.dataImg.name.toLowerCase().split(' ').join('-'))
       const uploadTask = storageRef.put(this.dataImg)
       return uploadTask
+    },
+    typestock () {
+      this.type = 'stock'
+    },
+    typeOrder () {
+      this.type = 'Order'
+    },
+    bye (key, number) {
+      firebase.database().ref('/stock/').child(key).update({
+        number: number - 1
+      })
     }
   }
 }
@@ -205,5 +237,9 @@ li {
 }
 a {
   color: #42b983;
+}
+.order{
+  margin-left: 20%;
+  width: 60%;
 }
 </style>

@@ -33,38 +33,12 @@
             </tr>
   </thead>
   <tbody v-for =" (stock,key) in showstock"  >
-    <tr  v-if = "sw !== key" >
+    <tr >
       <td>  <img :src="stock.image"style="width: 100px; height: 100px;"></td>
       <td> </br> </br>{{stock.name}}</td>
       <td> </br></br> {{stock.number}}</td>
       <td> </br></br> {{stock.price}}</td>
-
-      <td> </br></br><a class="button is-primary is-outlined" @click="swap(key)">Update</a> </td>
-      <td> </br></br><a class="button is-primary is-outlined" @click="Delete(key)">Delete</a> </td>
    </tr>
-
-      <tr  v-else >
-        <td>  <input class="input is-focused" type="text"   v-model="stock.name" ></td>
-        <td>   <input class="input is-focused" type="text"  v-model="stock.number" ></td>
-        <td>  <input class="input is-focused" type="text"   v-model="stock.price" ></td>
-        <td>
-          <div class="file">
-                <label class="file-label">
-                <input class="file-input" type="file" name="resume"  @change="onFileChange($event.target.files[0])"required>  &nbsp; &nbsp; &nbsp; &nbsp;
-                  <span class="file-cta">
-                    <span class="file-icon">
-                      <i class="fas fa-upload"></i>
-                    </span>
-                    <span class="file-label">
-                      Choose a file…
-                    </span>
-                  </span>
-                </label>
-              </div>
-        </td>
-        <td> <a class="button is-primary is-outlined" @click="Update(key,stock.name,stock.number,stock.price)">Save</a> </td>
-        <td> <a class="button is-primary is-outlined" @click="cancel()">Cancle</a> </td>
-     </tr>
       </tbody>
 </table>
 
@@ -78,6 +52,9 @@ export default {
     return {
       showstock: ''
     }
+  },
+  created: function () {
+    this.pullData()
   },
   methods: {
     pullData: function () {

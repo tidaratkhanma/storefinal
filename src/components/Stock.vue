@@ -74,7 +74,6 @@
             <td> </br></br><a class="button is-primary is-outlined" @click="swap(key)">Update</a> </td>
             <td> </br></br><a class="button is-primary is-outlined" @click="Delete(key)">Delete</a> </td>
          </tr>
-
             <tr  v-else >
               <td>  <input class="input is-focused" type="text"   v-model="stock.name" ></td>
               <td>   <input class="input is-focused" type="text"  v-model="stock.number" ></td>
@@ -106,18 +105,32 @@
 </div>
 <!-- จบstock -->
 <div class="order"  v-if = "type === 'Order'" >
+
       <table class="table is-striped is-narrow is-hoverable is-fullwidth" >
 
         <tbody v-for =" (stock,key) in showstock"  >
           <tr>
             <td >  <img :src="stock.image"style="width: 150px; height: 200px;"></td>
             <td>  </br></br></br><b>  {{stock.name}} </b>
-            </br>  จำนวน   {{stock.number}}
-            </br>ราคา   {{stock.price}}
+            </br>  จำนวน  {{stock.number}}
+            </br> ราคา {{stock.price}}
+            </td>
+            <td> </br></br></br></br>
+                <div class="select">
+                  <select v-model="selected">
+                    <option disabled value="">select</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                </div>
             </td>
             <td></td><td></td>
             <td> </br></br></br> </br>
-                  <a  class="button is-success"  @click="bye(key,stock.number)">
+               <!-- @click="bye(key,stock.number)" -->
+                  <a  class="button is-success" @click="confirm(stock.name,stock.number,selected,stock.price,key)">
                     <span class="icon is-small">
                       <i class="fas fa-cart-plus"></i>
                     </span>
@@ -175,6 +188,7 @@ export default {
       this.data.number = ''
       this.data.price = ''
       this.data.image = ''
+      this.pullData()
     },
     async Update (key, name, number, price) {
       this.checkEdit = ''
@@ -217,6 +231,18 @@ export default {
       firebase.database().ref('/stock/').child(key).update({
         number: number - 1
       })
+      this.pullData()
+    },
+    confirm(name,number,selected,price,key) {
+      this.$dialog.confirm({
+        title: 'Privacy Politics',
+        message: name +  '</br>ราคา &nbsp;&nbsp;' + price + '</br>จำนวน &nbsp;&nbsp;' + selected + '</br>ราคารวม &nbsp;&nbsp;' + (selected*price),
+        onConfirm: () =>
+        firebase.database().ref('/stock/').child(key).update({
+          number: number - selected
+        })
+      })
+      this.pullData()
     }
   }
 }

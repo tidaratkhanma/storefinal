@@ -191,7 +191,7 @@ export default {
       this.pullData()
     },
     async Update (key, name, number, price) {
-      this.checkEdit = ''
+      this.sw = ''
       let urlsImg = await this.createImage()
       firebase.database().ref('/stock/').child(key).update({
         name: name,
@@ -199,7 +199,6 @@ export default {
         price: price,
         image: urlsImg.downloadURL
       })
-      this.checkEdit = ''
       this.sw = 'update'
       this.pullData()
     },
@@ -234,15 +233,30 @@ export default {
       this.pullData()
     },
     confirm(name,number,selected,price,key) {
-      this.$dialog.confirm({
-        title: 'Privacy Politics',
-        message: name +  '</br>ราคา &nbsp;&nbsp;' + price + '</br>จำนวน &nbsp;&nbsp;' + selected + '</br>ราคารวม &nbsp;&nbsp;' + (selected*price),
-        onConfirm: () =>
-        firebase.database().ref('/stock/').child(key).update({
-          number: number - selected
+      if (selected<=number) {
+        this.$dialog.confirm({
+          title: 'Privacy Politics',
+          message: name +  '</br>ราคา &nbsp;&nbsp;' + price + '</br>จำนวน &nbsp;&nbsp;' + selected + '</br>ราคารวม &nbsp;&nbsp;' + (selected*price),
+          onConfirm: () => {
+          firebase.database().ref('/stock/').child(key).update({
+            number: number - selected
+          })
+          this.pullData()
+        }
         })
-      })
-      this.pullData()
+        this.pullData()
+      }
+      else {
+        this.$dialog.alert({
+          title: 'Error',
+          message: 'Insufficient Product',
+          type: 'is-danger',
+          hasIcon: true,
+          icon: 'times-circle',
+          iconPack: 'fa'
+        })
+        this.pullData()
+      }
     }
   }
 }

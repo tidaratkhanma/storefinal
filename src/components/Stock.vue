@@ -1,16 +1,16 @@
 <template>
   <div class="hello">
-    <div class="tabs is-toggle  is-right">
+    <div class="tabs is-toggle is-fullwidth is-large">
   <ul>
     <li  @click="typeOrder()">
       <a>
-        <span class="icon is-small"><i class="fas fa-film" aria-hidden="true"></i></span>
+        <span class="icon is-small"><i class="fas fa-shopping-cart" aria-hidden="true"></i></span>
         <span>Order</span>
       </a>
     </li>
     <li  @click="typestock()">
       <a>
-        <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
+        <span class="icon is-small"><i class="far fa-clipboard" aria-hidden="true"></i></span>
         <span>Stock</span>
       </a>
     </li>
@@ -25,35 +25,41 @@
     <div class="column is-two-thirds">
       <table>
         <tr>
-          <td> <input class="input is-focused" type="text" placeholder="ชื่อสินค้า"  v-model="data.name" ></td>  &nbsp; &nbsp; &nbsp; &nbsp;
-          <td> <input class="input is-focused" type="text" placeholder="จำนวน"  v-model="data.number"></td>&nbsp; &nbsp; &nbsp; &nbsp;
-          <td> <input class="input is-focused" type="text" placeholder="ราคา"  v-model="data.price"></td> &nbsp; &nbsp; &nbsp; &nbsp;
+          <td> <input class="input is-danger" type="text" placeholder="ชื่อสินค้า"  v-model="data.name" ></td>  &nbsp; &nbsp; &nbsp; &nbsp;
+          <td> <input class="input is-danger" type="text" placeholder="จำนวน"  v-model="data.number"></td>&nbsp; &nbsp; &nbsp; &nbsp;
+          <td> <input class="input is-danger" type="text" placeholder="ราคา"  v-model="data.price"></td> &nbsp; &nbsp; &nbsp; &nbsp;
           <td>
-            <div class="file">
-                  <label class="file-label">
+
+
+            <div class="field">
+              <div class="file is-danger">
+                <label class="file-label">
                   <input class="file-input" type="file" name="resume"  @change="onFileChange($event.target.files[0])"required>
-                    <span class="file-cta">
-                      <span class="file-icon">
-                        <i class="fas fa-upload"></i>
-                      </span>
-                      <span class="file-label">
-                        Choose a file…
-                      </span>
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-upload"></i>
                     </span>
-                  </label>
-                </div>
+                    <span class="file-label">
+                      Choose a file…
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </div>
+
+
           </td> &nbsp; &nbsp; &nbsp; &nbsp;
-          <td> <a class="button is-primary is-outlined" @click="insert()">+ADD</a> </td>
+          <td> <a class="button is-danger is-active" @click="insert()">ADD</a> </td>
         </tr>
       </table>
     </div>
   <div class="column"></div>
 </div>
-<center>
-<img width="25%" src="../assets/store.png"> </br> </center>
+<!-- <center>
+<img width="25%" src="../assets/store.png"> </br> </center> -->
 <div class="columns">
   <div class="column"></div>
-      <table class="table is-fullwidth" >
+      <table class="table is-fullwidth"  >
         <thead>
                 <tr>
                       <th scope="col">Name</th>
@@ -71,8 +77,8 @@
             <td> </br></br> {{stock.number}}</td>
             <td> </br></br> {{stock.price}}</td>
 
-            <td> </br></br><a class="button is-primary is-outlined" @click="swap(key)">Update</a> </td>
-            <td> </br></br><a class="button is-primary is-outlined" @click="Delete(key)">Delete</a> </td>
+            <td> </br></br><a class="button is-success is-outlined" @click="swap(key)">Update</a> </td>
+            <td> </br></br><a class="button is-danger is-outlined" @click="Delete(key)">Delete</a> </td>
          </tr>
             <tr  v-else >
               <td>  <input class="input is-focused" type="text"   v-model="stock.name" ></td>
@@ -93,8 +99,8 @@
                       </label>
                     </div>
               </td>
-              <td> <a class="button is-primary is-outlined" @click="Update(key,stock.name,stock.number,stock.price)">Save</a> </td>
-              <td> <a class="button is-primary is-outlined" @click="cancel()">Cancle</a> </td>
+              <td> <a class="button is-danger is-outlined" @click="Update(key,stock.name,stock.number,stock.price)">Save</a> </td>
+              <td> <a class="button is-danger is-outlined" @click="cancel()">Cancle</a> </td>
            </tr>
             </tbody>
       </table>
@@ -147,12 +153,12 @@
 <script>
 import firebase from 'firebase'
 var config = {
-  apiKey: 'AIzaSyDgYgfnjiyffPJzD4Pqjt3f-nXfTGW6_Ko',
-  authDomain: 'store-a7427.firebaseapp.com',
-  databaseURL: 'https://store-a7427.firebaseio.com',
-  projectId: 'store-a7427',
-  storageBucket: 'store-a7427.appspot.com',
-  messagingSenderId: '356296828842'
+  apiKey: 'AIzaSyDIwGfPhbp6_Li9rk8BlWpVH0owMyhduHg',
+   authDomain: 'final-35ed1.firebaseapp.com',
+   databaseURL: 'https://final-35ed1.firebaseio.com',
+   projectId: 'final-35ed1',
+   storageBucket: 'final-35ed1.appspot.com',
+   messagingSenderId: "305581859787"
   }
   firebase.initializeApp(config)
 export default {

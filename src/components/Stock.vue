@@ -62,12 +62,12 @@
       <table class="table is-fullwidth"  >
         <thead>
                 <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col">Number</th>
-                      <th scope="col">Price</th>
-                      <th scope="col"></th>
-                      <th scope="col">Update</th>
-                      <th scope="col">Delete</th>
+                      <th scope="col"><font face="verdana" color="black">image</font></th>
+                      <th scope="col"><font face="verdana" color="black">Name</font></th>
+                      <th scope="col"><font face="verdana" color="black">Number</font></th>
+                      <th scope="col"><font face="verdana" color="black">Price</font></th>
+                      <th scope="col"><font face="verdana" color="black">Update</font></th>
+                      <th scope="col"><font face="verdana" color="black">Delete</font></th>
                   </tr>
         </thead>
         <tbody v-for =" (stock,key) in showstock"  >
@@ -117,12 +117,13 @@
         <tbody v-for =" (stock,key) in showstock"  >
           <tr>
             <td >  <img :src="stock.image"style="width: 150px; height: 200px;"></td>
-            <td>  </br></br></br><b>  {{stock.name}} </b>
+            <td>  </br></br></br><b> {{stock.name}} </b>
             </br>  จำนวน  {{stock.number}}
             </br> ราคา {{stock.price}}
             </td>
             <td> </br></br></br></br>
                 <div class="select">
+          
                   <select v-model="selected">
                     <option disabled value="">select</option>
                     <option>1</option>
